@@ -1,2 +1,33 @@
-# iron-pi-spi-codec
+# iron-pi-ipc-codec
+
 Encodes and decodes SPI bus messages exchanged with the Iron Pi
+
+## Getting Started
+
+To allow multiple devices to interact with a single device, the spi-hub process 
+handles communications with devices, and communicates with clients over a 
+UNIX socket. To install and run the SPI Hub process:
+
+```
+git clone https://github.com/jcoreio/iron-pi-ipc-codec.git
+cd iron-pi-ipc-codec
+yarn
+```
+
+## License
+
+(The Apache 2.0 License)
+
+Copyright (c) 2018 JCore Systems LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
