@@ -99,7 +99,7 @@
     "mocha": "^4.1.0",
     "nyc": "^11.4.1",
     "rimraf": "^2.6.0",
-    "semantic-release": "^15.10.6"
+    "semantic-release": "^15.12.0"
   },
   "dependencies": {
     "protobufjs": "^6.8.8"
