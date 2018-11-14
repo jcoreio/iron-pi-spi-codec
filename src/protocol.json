@@ -1,0 +1,38 @@
+{
+  "nested": {
+    "IronPi": {
+      "nested": {
+        "DeviceOutputStates": {
+          "fields": {
+            "address": {
+              "type": "uint32",
+              "id": 1
+            },
+            "levels": {
+              "rule": "repeated",
+              "type": "bool",
+              "id": 2
+            }
+          }
+        },
+        "SetAllOutputsMessage": {
+          "fields": {
+            "outputs": {
+              "rule": "repeated",
+              "type": "DeviceOutputStates",
+              "id": 1
+            },
+            "requestInputStates": {
+              "type": "bool",
+              "id": 2
+            },
+            "flashLEDs": {
+              "type": "bool",
+              "id": 3
+            }
+          }
+        }
+      }
+    }
+  }
+}

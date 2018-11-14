@@ -10,6 +10,7 @@
   "files": [
     "index.js",
     "index.flow.js",
+    "protocol.json",
     "README.md",
     "LICENSE.md",
     "yarn.lock"
@@ -22,8 +23,9 @@
     "flow:coverage": "for file in src/**.js test/**.js; do echo $file; flow coverage $file; done",
     "flow:watch": "flow-watch -e js,js.flow,flowconfig --ignore node_modules/ --watch .flowconfig --watch src/ --watch test/",
     "clean": "rimraf $(cd src; ls) *.js.flow",
-    "build": "yarn run clean && babel src --out-dir . && flow-copy-source -v src/ .",
-    "test": "NODE_ENV=production BABEL_ENV=es5 mocha $npm_package_config_mocha && NODE_ENV=production BABEL_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
+    "protobuf-compile": "pbjs src/protocol.proto -t json -o src/protocol.json",
+    "build": "yarn run clean && yarn run protobuf-compile && babel src --out-dir . && flow-copy-source -v src/ . && copyfiles src/protocol.json .",
+    "test": "NODE_ENV=production BABEL_ENV=es5 yarn run protobuf-compile && mocha $npm_package_config_mocha && NODE_ENV=production BABEL_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
     "test:watch": "NODE_ENV=production BABEL_ENV=test mocha --watch $npm_package_config_mocha",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov; codecov",
     "commitmsg": "commitlint -e $GIT_PARAMS",
@@ -86,6 +88,7 @@
     "codecov": "^3.0.0",
     "condition-circle": "^2.0.1",
     "copy": "^0.3.0",
+    "copyfiles": "^2.1.0",
     "eslint": "^3.15.0",
     "eslint-plugin-flowtype": "^2.30.0",
     "eslint-watch": "^3.0.0",
@@ -98,6 +101,9 @@
     "nyc": "^11.4.1",
     "rimraf": "^2.6.0",
     "semantic-release": "^15.10.6"
+  },
+  "dependencies": {
+    "protobufjs": "^6.8.8"
   },
   "publishConfig": {
     "access": "public"

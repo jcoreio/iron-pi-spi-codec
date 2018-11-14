@@ -1,0 +1,13 @@
+package IronPi;
+syntax = "proto3";
+
+message DeviceOutputStates {
+    uint32 address = 1;
+    repeated bool levels = 2;
+}
+
+message SetAllOutputsMessage {
+    repeated DeviceOutputStates outputs = 1;
+    bool requestInputStates = 2;
+    bool flashLEDs = 3;
+}
