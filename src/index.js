@@ -80,7 +80,17 @@ export default class IronPiIPCCodec {
     this._MessageToDriver = getType('MessageToDriver')
   }
 
-  // Messages to driver
+  // Encode messages from driver
+
+  encodeHardwareInfo(hardwareInfo: HardwareInfo): Buffer {
+    return this._encodeMessageFromDriver({hardwareInfo})
+  }
+
+  encodeDeviceInputStates(deviceInputStates: DeviceInputStates): Buffer {
+    return this._encodeMessageFromDriver({deviceInputStates})
+  }
+
+  // Emcode messages to driver
 
   encodeSetOutputs(setOutputs: SetOutputs): Buffer {
     return this._encodeMessageToDriver({setOutputs})
@@ -90,12 +100,24 @@ export default class IronPiIPCCodec {
     return this._encodeMessageToDriver({setLEDs})
   }
 
-  _encodeMessageToDriver(message: MessageToDriver): Buffer {
-    return encode(this._MessageToDriver, message)
+  // Decode messages
+
+  decodeMessageFromDriver(buf: Buffer): MessageFromDriver {
+    return decode(this._MessageFromDriver, buf)
   }
 
   decodeMessageToDriver(buf: Buffer): MessageToDriver {
     return decode(this._MessageToDriver, buf)
+  }
+
+  // Encode helpers
+
+  _encodeMessageFromDriver(message: MessageFromDriver): Buffer {
+    return encode(this._MessageFromDriver, message)
+  }
+
+  _encodeMessageToDriver(message: MessageToDriver): Buffer {
+    return encode(this._MessageToDriver, message)
   }
 }
 
