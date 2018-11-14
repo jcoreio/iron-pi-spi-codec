@@ -1,8 +1,8 @@
 coverage
 .idea
 .nyc_output
-index.js
-index.js.flow
-protobuf.json
+/index.js
+/index.js.flow
+/protobuf.json
 **/node_modules
 .eslintcache
