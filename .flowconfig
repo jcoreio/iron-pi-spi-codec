@@ -1,5 +1,4 @@
 [ignore]
-<PROJECT_ROOT>/index.js.flow
 <PROJECT_ROOT>/lib/.*
 <PROJECT_ROOT>/es/.*
 <PROJECT_ROOT>/node_modules/fbjs/.*

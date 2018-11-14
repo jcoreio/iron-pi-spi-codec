@@ -5,12 +5,10 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "main": "index.js",
+  "main": "lib/index.js",
   "sideEffects": false,
   "files": [
-    "index.js",
-    "index.flow.js",
-    "protocol.json",
+    "lib/",
     "README.md",
     "LICENSE.md",
     "yarn.lock"
@@ -22,9 +20,9 @@
     "flow": "flow",
     "flow:coverage": "for file in src/**.js test/**.js; do echo $file; flow coverage $file; done",
     "flow:watch": "flow-watch -e js,js.flow,flowconfig --ignore node_modules/ --watch .flowconfig --watch src/ --watch test/",
-    "clean": "rimraf $(cd src; ls) *.js.flow",
+    "clean": "rimraf lib",
     "protobuf-compile": "pbjs src/protocol.proto -t json -o src/protocol.json",
-    "build": "yarn run clean && yarn run protobuf-compile && babel src --out-dir . && flow-copy-source -v src/ . && copyfiles -f src/protocol.json .",
+    "build": "yarn run clean && yarn run protobuf-compile && babel src --out-dir lib && flow-copy-source -v src/ lib && copyfiles -f src/protocol.json lib",
     "test": "yarn run protobuf-compile && NODE_ENV=production BABEL_ENV=es5 mocha $npm_package_config_mocha",
     "coverage": "yarn run protobuf-compile && NODE_ENV=production BABEL_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
     "test:watch": "NODE_ENV=production BABEL_ENV=test mocha --watch $npm_package_config_mocha",

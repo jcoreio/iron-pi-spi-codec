@@ -1,8 +1,6 @@
 coverage
 .idea
 .nyc_output
-/index.js
-/index.js.flow
-/protocol.json
+lib
 **/node_modules
 .eslintcache
