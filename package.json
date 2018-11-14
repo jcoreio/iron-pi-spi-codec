@@ -24,7 +24,7 @@
     "flow:watch": "flow-watch -e js,js.flow,flowconfig --ignore node_modules/ --watch .flowconfig --watch src/ --watch test/",
     "clean": "rimraf $(cd src; ls) *.js.flow",
     "protobuf-compile": "pbjs src/protocol.proto -t json -o src/protocol.json",
-    "build": "yarn run clean && yarn run protobuf-compile && babel src --out-dir . && flow-copy-source -v src/ . && copyfiles src/protocol.json .",
+    "build": "yarn run clean && yarn run protobuf-compile && babel src --out-dir . && flow-copy-source -v src/ . && copyfiles -f src/protocol.json .",
     "test": "yarn run protobuf-compile && NODE_ENV=production BABEL_ENV=es5 mocha $npm_package_config_mocha",
     "coverage": "yarn run protobuf-compile && NODE_ENV=production BABEL_ENV=coverage nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
     "test:watch": "NODE_ENV=production BABEL_ENV=test mocha --watch $npm_package_config_mocha",
