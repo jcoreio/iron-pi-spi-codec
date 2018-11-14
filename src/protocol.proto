@@ -1,13 +1,75 @@
 package IronPi;
 syntax = "proto3";
 
-message DeviceOutputStates {
-    uint32 address = 1;
-    repeated bool levels = 2;
+// Messages from driver
+
+message DeviceModel {
+  string name = 1;
+  string version = 2;
+  uint32 numDigitalInputs = 3;
+  uint32 numDigitalOutputs = 4;
+  uint32 numAnalogInputs = 5;
+  bool hasConnectButton = 6;
 }
 
-message SetAllOutputsMessage {
-    repeated DeviceOutputStates outputs = 1;
-    bool requestInputStates = 2;
-    bool flashLEDs = 3;
+message DetectedDevice {
+  uint32 address = 1;
+  DeviceModel model = 2;
+}
+
+message HardwareInfo {
+  repeated DetectedDevice devices = 1;
+  string serialNumber = 2;
+  string accessCode = 3;
+}
+
+message DeviceInputState {
+  uint32 address = 1;
+  repeated bool digitalInputs = 2;
+  repeated uint32 digitalInputEventCounts = 3;
+  repeated bool digitalOutputs = 4;
+  repeated float analogInputs = 5;
+  bool connectButtonPressed = 6;
+  uint32 connectButtonEventCount = 7;
+}
+
+message DeviceInputStates {
+  repeated DeviceInputState inputStates = 1;
+}
+
+message MessageFromDriver {
+  oneof message {
+    HardwareInfo hardwareInfo = 1;
+    DeviceInputStates deviceInputStates = 2;
+  }
+}
+
+// Messages to driver
+
+message DeviceOutputStates {
+  uint32 address = 1;
+  repeated bool levels = 2;
+}
+
+message SetOutputs {
+  repeated DeviceOutputStates outputs = 1;
+}
+
+message LEDCommand {
+  uint32 address = 1;
+  string colors = 2;
+  uint32 onTime = 3;
+  uint32 offTime = 4;
+  uint32 idleTime = 5;
+}
+
+message SetLEDs {
+  repeated LEDCommand leds = 1;
+}
+
+message MessageToDriver {
+  oneof message {
+    SetOutputs setOutputs = 1;
+    SetLEDs setLEDs = 2;
+  }
 }

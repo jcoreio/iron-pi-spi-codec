@@ -3,8 +3,8 @@
 import protobuf from 'protobufjs'
 import type {Type as ProtobufType} from 'protobufjs'
 
-export type IronPiDeviceModel = {
-  model: string,
+export type DeviceModel = {
+  name: string, // e.g. 'iron-pi-cm8' or 'iron-pi-io16'
   version: string,
   numDigitalInputs: number,
   numDigitalOutputs: number,
@@ -12,12 +12,18 @@ export type IronPiDeviceModel = {
   hasConnectButton: boolean,
 }
 
-export type IronPiDetectedDevice = {
+export type DetectedDevice = {
   address: number,
-  info: IronPiDeviceModel,
+  model: DeviceModel,
 }
 
-export type IronPiStateFromDevice = {
+export type HardwareInfo = {
+  devices: Array<DetectedDevice>,
+  serialNumber: string,
+  accessCode: string,
+}
+
+export type DeviceInputState = {
   address: number,
   digitalInputs: Array<boolean>,
   digitalInputEventCounts: Array<number>,
@@ -27,10 +33,13 @@ export type IronPiStateFromDevice = {
   connectButtonEventCount?: number,
 }
 
-export type IronPiHardwareInfo = {
-  devices: Array<IronPiDetectedDevice>,
-  serialNumber: string,
-  accessCode: string,
+export type DeviceInputStates = {
+  inputStates: Array<DeviceInputState>,
+}
+
+export type MessageFromDriver = {
+  hardwareInfo?: HardwareInfo,
+  deviceInputStates?: DeviceInputStates,
 }
 
 export type DeviceOutputStates = {
@@ -38,13 +47,11 @@ export type DeviceOutputStates = {
   levels: Array<boolean>,
 }
 
-export type SetAllOutputsMessage = {
+export type SetOutputs = {
   outputs: Array<DeviceOutputStates>,
-  requestInputStates?: ?boolean,
-  flashLEDs?: ?boolean,
 }
 
-export type LEDMessage = {
+export type LEDCommand = {
   address: number,
   colors: string, // e.g. 'gg' or 'ggrr'
   onTime: number,
@@ -52,34 +59,50 @@ export type LEDMessage = {
   idleTime: number,
 }
 
-export const IPC_PROTO_VERSION = 1
+export type SetLEDs = {
+  leds: Array<LEDCommand>,
+}
 
-export const IPC_SOCKET_PATH = '/tmp/socket-iron-pi'
-
-// Messages from the SPI handler to clients
-export const IPC_MSG_DEVICES_LIST = 1
-
-// Messages from clients to the SPI handler
-export const IPC_MSG_SET_ALL_OUTPUTS = 20
-export const IPC_MSG_SET_LEDS = 21
-
-const decode = (type: ProtobufType, buf: Buffer) => type.toObject(type.decode(buf))
+export type MessageToDriver = {
+  setOutputs?: SetOutputs,
+  setLEDs?: SetLEDs,
+}
 
 export default class IronPiIPCCodec {
 
-  _SetAllOutputsMessageType: ProtobufType
+  _MessageFromDriver: ProtobufType
+  _MessageToDriver: ProtobufType
 
   constructor() {
     const root = protobuf.Root.fromJSON(require('./protocol.json'))
     const getType = type => root.lookupType(`IronPi.${type}`)
-    this._SetAllOutputsMessageType = getType('SetAllOutputsMessage')
+    this._MessageFromDriver = getType('MessageFromDriver')
+    this._MessageToDriver = getType('MessageToDriver')
   }
 
-  encodeSetAllOutputsMessage(setAllOutputsMessage: SetAllOutputsMessage): Buffer {
-    return this._SetAllOutputsMessageType.encode(setAllOutputsMessage).finish()
+  // Messages to driver
+
+  encodeSetOutputs(setOutputs: SetOutputs): Buffer {
+    return this._encodeMessageToDriver({setOutputs})
   }
 
-  decodeSetAllOutputsMessage(buf: Buffer): SetAllOutputsMessage {
-    return decode(this._SetAllOutputsMessageType, buf)
+  encodeSetLEDs(setLEDs: SetLEDs): Buffer {
+    return this._encodeMessageToDriver({setLEDs})
   }
+
+  _encodeMessageToDriver(message: MessageToDriver): Buffer {
+    return encode(this._MessageToDriver, message)
+  }
+
+  decodeMessageToDriver(buf: Buffer): MessageToDriver {
+    return decode(this._MessageToDriver, buf)
+  }
+}
+
+function encode(type: ProtobufType, message: any): Buffer {
+  return type.encode(message).finish()
+}
+
+function decode(type: ProtobufType, buf: Buffer): any {
+  return type.toObject(type.decode(buf))
 }

@@ -2,6 +2,128 @@
   "nested": {
     "IronPi": {
       "nested": {
+        "DeviceModel": {
+          "fields": {
+            "name": {
+              "type": "string",
+              "id": 1
+            },
+            "version": {
+              "type": "string",
+              "id": 2
+            },
+            "numDigitalInputs": {
+              "type": "uint32",
+              "id": 3
+            },
+            "numDigitalOutputs": {
+              "type": "uint32",
+              "id": 4
+            },
+            "numAnalogInputs": {
+              "type": "uint32",
+              "id": 5
+            },
+            "hasConnectButton": {
+              "type": "bool",
+              "id": 6
+            }
+          }
+        },
+        "DetectedDevice": {
+          "fields": {
+            "address": {
+              "type": "uint32",
+              "id": 1
+            },
+            "model": {
+              "type": "DeviceModel",
+              "id": 2
+            }
+          }
+        },
+        "HardwareInfo": {
+          "fields": {
+            "devices": {
+              "rule": "repeated",
+              "type": "DetectedDevice",
+              "id": 1
+            },
+            "serialNumber": {
+              "type": "string",
+              "id": 2
+            },
+            "accessCode": {
+              "type": "string",
+              "id": 3
+            }
+          }
+        },
+        "DeviceInputState": {
+          "fields": {
+            "address": {
+              "type": "uint32",
+              "id": 1
+            },
+            "digitalInputs": {
+              "rule": "repeated",
+              "type": "bool",
+              "id": 2
+            },
+            "digitalInputEventCounts": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 3
+            },
+            "digitalOutputs": {
+              "rule": "repeated",
+              "type": "bool",
+              "id": 4
+            },
+            "analogInputs": {
+              "rule": "repeated",
+              "type": "float",
+              "id": 5
+            },
+            "connectButtonPressed": {
+              "type": "bool",
+              "id": 6
+            },
+            "connectButtonEventCount": {
+              "type": "uint32",
+              "id": 7
+            }
+          }
+        },
+        "DeviceInputStates": {
+          "fields": {
+            "inputStates": {
+              "rule": "repeated",
+              "type": "DeviceInputState",
+              "id": 1
+            }
+          }
+        },
+        "MessageFromDriver": {
+          "oneofs": {
+            "message": {
+              "oneof": [
+                "hardwareInfo",
+                "deviceInputStates"
+              ]
+            }
+          },
+          "fields": {
+            "hardwareInfo": {
+              "type": "HardwareInfo",
+              "id": 1
+            },
+            "deviceInputStates": {
+              "type": "DeviceInputStates",
+              "id": 2
+            }
+          }
+        },
         "DeviceOutputStates": {
           "fields": {
             "address": {
@@ -15,20 +137,65 @@
             }
           }
         },
-        "SetAllOutputsMessage": {
+        "SetOutputs": {
           "fields": {
             "outputs": {
               "rule": "repeated",
               "type": "DeviceOutputStates",
               "id": 1
+            }
+          }
+        },
+        "LEDCommand": {
+          "fields": {
+            "address": {
+              "type": "uint32",
+              "id": 1
             },
-            "requestInputStates": {
-              "type": "bool",
+            "colors": {
+              "type": "string",
               "id": 2
             },
-            "flashLEDs": {
-              "type": "bool",
+            "onTime": {
+              "type": "uint32",
               "id": 3
+            },
+            "offTime": {
+              "type": "uint32",
+              "id": 4
+            },
+            "idleTime": {
+              "type": "uint32",
+              "id": 5
+            }
+          }
+        },
+        "SetLEDs": {
+          "fields": {
+            "leds": {
+              "rule": "repeated",
+              "type": "LEDCommand",
+              "id": 1
+            }
+          }
+        },
+        "MessageToDriver": {
+          "oneofs": {
+            "message": {
+              "oneof": [
+                "setOutputs",
+                "setLEDs"
+              ]
+            }
+          },
+          "fields": {
+            "setOutputs": {
+              "type": "SetOutputs",
+              "id": 1
+            },
+            "setLEDs": {
+              "type": "SetLEDs",
+              "id": 2
             }
           }
         }
