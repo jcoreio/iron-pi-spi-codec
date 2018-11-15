@@ -42,13 +42,13 @@ export type MessageFromDriver = {
   deviceInputStates?: DeviceInputStates,
 }
 
-export type DeviceOutputStates = {
+export type DeviceOutputState = {
   address: number,
   levels: Array<boolean>,
 }
 
 export type SetOutputs = {
-  outputs: Array<DeviceOutputStates>,
+  outputs: Array<DeviceOutputState>,
 }
 
 export type LEDCommand = {

@@ -124,7 +124,7 @@
             }
           }
         },
-        "DeviceOutputStates": {
+        "DeviceOutputState": {
           "fields": {
             "address": {
               "type": "uint32",
@@ -141,7 +141,7 @@
           "fields": {
             "outputs": {
               "rule": "repeated",
-              "type": "DeviceOutputStates",
+              "type": "DeviceOutputState",
               "id": 1
             }
           }
