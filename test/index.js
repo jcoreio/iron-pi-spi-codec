@@ -101,14 +101,12 @@ describe('IronPiIPCCodec', () => {
           colors: 'rrgg',
           onTime: 300,
           offTime: 300,
-          idleTime: 1000,
         },
         {
           address: 2,
           colors: 'gggr',
           onTime: 200,
           offTime: 200,
-          idleTime: 100,
         }
       ]
     }
