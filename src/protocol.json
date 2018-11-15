@@ -163,6 +163,10 @@
             "offTime": {
               "type": "uint32",
               "id": 4
+            },
+            "idleTime": {
+              "type": "uint32",
+              "id": 5
             }
           }
         },

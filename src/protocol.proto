@@ -60,6 +60,7 @@ message LEDCommand {
   string colors = 2;
   uint32 onTime = 3;
   uint32 offTime = 4;
+  uint32 idleTime = 5;
 }
 
 message SetLEDs {
