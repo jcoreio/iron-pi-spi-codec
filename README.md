@@ -1,33 +1,40 @@
-# iron-pi-ipc-codec
+# Iron Pi IPC Codec
 
-Encodes and decodes SPI bus messages exchanged with the Iron Pi
+Encodes and decodes messages exchanged over UNIX sockets with the Iron Pi SPI handler
 
 ## Getting Started
 
-To allow multiple devices to interact with a single device, the spi-hub process 
-handles communications with devices, and communicates with clients over a 
-UNIX socket. To install and run the SPI Hub process:
-
 ```
-git clone https://github.com/jcoreio/iron-pi-ipc-codec.git
-cd iron-pi-ipc-codec
-yarn
+npm install --save @jcoreio/iron-pi-ipc-codec
+```
+
+## Example
+
+```js
+
+import IronPiIPCCodec from './index'
+import type {SetOutputs} from './index'
+
+const codec: IronPiIPCCodec = new IronPiIPCCodec()
+
+const setOutputs: SetOutputs = {
+  outputs: [
+    {
+      address: 1,
+      levels: [true, false, true, false],
+    },
+    {
+      address: 2,
+      levels: [true, true, true, true, false, false, false, false],
+    }
+  ]
+}
+const buf: Buffer = codec.encodeSetOutputs(setOutputs)
+const msgOut = codec.decodeMessageToDriver(buf)
+// msgOut = {setOutputs: {outputs: [ ... ]}}
+
 ```
 
 ## License
 
-(The Apache 2.0 License)
-
-Copyright (c) 2018 JCore Systems LLC
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+ [Apache-2.0](LICENSE)
