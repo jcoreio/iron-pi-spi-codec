@@ -68,6 +68,8 @@ export type MessageToDriver = {
   setLEDs?: SetLEDs,
 }
 
+export const UNIX_SOCKET_PATH = '/tmp/socket-iron-pi'
+
 export default class IronPiIPCCodec {
 
   _MessageFromDriver: ProtobufType
