@@ -14,6 +14,7 @@ export type DeviceModel = {
 
 export type DetectedDevice = {
   address: number,
+  ioOffset: number, // Offset of the first I/O point on this device, e.g. 0 for the first device, 8 for the second device if the first device has 8 channels
   model: DeviceModel,
 }
 
@@ -25,6 +26,7 @@ export type HardwareInfo = {
 
 export type DeviceInputState = {
   address: number,
+  ioOffset: number, // Offset of the first I/O point on this device, e.g. 0 for the first device, 8 for the second device if the first device has 8 channels
   digitalInputs: Array<boolean>,
   digitalInputEventCounts: Array<number>,
   digitalOutputs: Array<boolean>,

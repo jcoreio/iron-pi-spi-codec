@@ -36,9 +36,13 @@
               "type": "uint32",
               "id": 1
             },
+            "ioOffset": {
+              "type": "uint32",
+              "id": 2
+            },
             "model": {
               "type": "DeviceModel",
-              "id": 2
+              "id": 3
             }
           }
         },
@@ -65,33 +69,37 @@
               "type": "uint32",
               "id": 1
             },
+            "ioOffset": {
+              "type": "uint32",
+              "id": 2
+            },
             "digitalInputs": {
               "rule": "repeated",
               "type": "bool",
-              "id": 2
+              "id": 3
             },
             "digitalInputEventCounts": {
               "rule": "repeated",
               "type": "uint32",
-              "id": 3
+              "id": 4
             },
             "digitalOutputs": {
               "rule": "repeated",
               "type": "bool",
-              "id": 4
+              "id": 5
             },
             "analogInputs": {
               "rule": "repeated",
               "type": "float",
-              "id": 5
+              "id": 6
             },
             "connectButtonPressed": {
               "type": "bool",
-              "id": 6
+              "id": 7
             },
             "connectButtonEventCount": {
               "type": "uint32",
-              "id": 7
+              "id": 8
             }
           }
         },

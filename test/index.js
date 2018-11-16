@@ -16,6 +16,7 @@ describe('IronPiIPCCodec', () => {
       devices: [
         {
           address: 1,
+          ioOffset: 0,
           model: {
             name: 'iron-pi-cm8',
             version: '1.0.0',
@@ -27,6 +28,7 @@ describe('IronPiIPCCodec', () => {
         },
         {
           address: 2,
+          ioOffset: 8,
           model: {
             name: 'iron-pi-io16',
             version: '1.0.1',
@@ -50,6 +52,7 @@ describe('IronPiIPCCodec', () => {
       inputStates: [
         {
           address: 1,
+          ioOffset: 0,
           digitalInputs: [true, false, true, true, false, false, true, false],
           digitalInputEventCounts: [0, 1, 2, 3, 9, 7, 5, 3],
           digitalOutputs: [true, true, false, false, true, false, true, true],
@@ -59,6 +62,7 @@ describe('IronPiIPCCodec', () => {
         },
         {
           address: 2,
+          ioOffset: 8,
           digitalInputs: [true, true, false, true, false, false, true, false, false, false],
           digitalInputEventCounts: [55, 44, 33, 22, 11, 11, 22, 33, 44, 55, 66],
           digitalOutputs: [true, true, false, false, true, false, true, true, true, false],

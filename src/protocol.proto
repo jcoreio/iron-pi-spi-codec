@@ -14,7 +14,8 @@ message DeviceModel {
 
 message DetectedDevice {
   uint32 address = 1;
-  DeviceModel model = 2;
+  uint32 ioOffset = 2;
+  DeviceModel model = 3;
 }
 
 message HardwareInfo {
@@ -25,12 +26,13 @@ message HardwareInfo {
 
 message DeviceInputState {
   uint32 address = 1;
-  repeated bool digitalInputs = 2;
-  repeated uint32 digitalInputEventCounts = 3;
-  repeated bool digitalOutputs = 4;
-  repeated float analogInputs = 5;
-  bool connectButtonPressed = 6;
-  uint32 connectButtonEventCount = 7;
+  uint32 ioOffset = 2;
+  repeated bool digitalInputs = 3;
+  repeated uint32 digitalInputEventCounts = 4;
+  repeated bool digitalOutputs = 5;
+  repeated float analogInputs = 6;
+  bool connectButtonPressed = 7;
+  uint32 connectButtonEventCount = 8;
 }
 
 message DeviceInputStates {
