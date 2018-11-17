@@ -56,9 +56,9 @@ export type SetOutputs = {
 export type LEDCommand = {
   address: number,
   colors: string, // e.g. 'gg' or 'ggrr'
-  onTime: number,
-  offTime: number,
-  idleTime: number,
+  onTime?: number,
+  offTime?: number,
+  idleTime?: number,
 }
 
 export type SetLEDs = {
