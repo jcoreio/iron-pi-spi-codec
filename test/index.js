@@ -11,7 +11,7 @@ describe('IronPiIPCCodec', () => {
 
   // Messages from driver
 
-  it('encodes and decodes a HardwareInfo message', () => {
+  it('encodes and decodes a HardwareInfo message with detected devices', () => {
     const hardwareInfo: HardwareInfo = {
       devices: [
         {
@@ -45,6 +45,23 @@ describe('IronPiIPCCodec', () => {
     const buf = codec.encodeHardwareInfo(hardwareInfo)
     const msgOut = codec.decodeMessageFromDriver(buf)
     expect(msgOut).to.deep.equal({hardwareInfo})
+  })
+
+  it('encodes and decodes a HardwareInfo message with no detected devices', () => {
+    const hardwareInfo: HardwareInfo = {
+      devices: [],
+      serialNumber: 'ABCDEFG',
+      accessCode: 'WXYZ',
+    }
+    const buf = codec.encodeHardwareInfo(hardwareInfo)
+    const msgOut = codec.decodeMessageFromDriver(buf)
+    // Protobuf omits empty arrays from the decoded result, so we need to expect that behavior
+    expect(msgOut).to.deep.equal({
+      hardwareInfo: {
+        serialNumber: 'ABCDEFG',
+        accessCode: 'WXYZ',
+      },
+    })
   })
 
   it('encodes and decodes a DeviceInputStates message', () => {

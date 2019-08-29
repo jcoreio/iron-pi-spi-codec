@@ -19,7 +19,7 @@ export type DetectedDevice = {
 }
 
 export type HardwareInfo = {
-  devices: Array<DetectedDevice>,
+  devices: ?Array<DetectedDevice>,
   serialNumber: string,
   accessCode: string,
 }
